@@ -42,7 +42,7 @@ var userRoutes = require('./routes/user');
 var app = express();
 
 
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true,useUnifiedTopology: true});
+mongoose.connect(keys.mongoURI,{useNewUrlParser:true,useUnifiedTopology: true});
 const db=mongoose.connection;
 db.on("error",(err)=>console.error(error));
 db.once('open',()=>console.log('Connected to Database ...'));
