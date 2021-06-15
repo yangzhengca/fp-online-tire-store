@@ -25,10 +25,14 @@ var flash=require('connect-flash');
 // import connect-mongo
 const MongoStore = require('connect-mongo');
 
+//import stipre keys
+const keys=require('./config/keys');
+// const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+// const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+
 //import stripe payment gateway
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
-const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
-const stripe = require('stripe')(stripeSecretKey)
+
+const stripe = require('stripe')(keys.stripeSecretKey)
 
 
 

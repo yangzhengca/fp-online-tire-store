@@ -3,10 +3,11 @@ const cart = require('../models/cart');
 var router = express.Router();
 var Product=require('../models/product');
 var Cart=require('../models/cart');
+const keys=require('../config/keys');
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
-const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
-const stripe = require('stripe')(stripeSecretKey)
+// const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+// const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+const stripe = require('stripe')(keys.stripeSecretKey)
 
 
 
@@ -54,7 +55,7 @@ router.get('/shopping-cart',(req,res,next)=>{
     return res.render('shop/shopping-cart',{products:null});
   }
   var cart =new Cart(req.session.cart);
-  res.render('shop/shopping-cart',{products:cart.generateArray(),totalPrice:cart.totalPrice,total:cart.totalPrice*100,key:stripePublicKey,title:'Shopping Cart'});
+  res.render('shop/shopping-cart',{products:cart.generateArray(),totalPrice:cart.totalPrice,total:cart.totalPrice*100,key:keys.stripePublicKey,title:'Shopping Cart'});
 });
 
 //checkout page router
