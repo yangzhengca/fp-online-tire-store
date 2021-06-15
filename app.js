@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config()
+// }
 
 
 var createError = require('http-errors');
@@ -77,7 +77,7 @@ app.use(session({
   secret:'mysupersecret',
   resave:false,
   saveUninitialized:false,
-  store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL }),
+  store: MongoStore.create({ mongoUrl: keys.mongoURI }),
   // store: MongoStore.create({ mongoUrl: 'mongodb://localhost/shopping' }),
   cookie:{maxAge:180*60*1000}  // expired in 3 hour
 }));
