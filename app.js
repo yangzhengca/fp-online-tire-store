@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config()
+// }
 
 
 var createError = require('http-errors');
@@ -42,7 +42,7 @@ var userRoutes = require('./routes/user');
 var app = express();
 
 
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true,useUnifiedTopology: true});
+mongoose.connect(keys.mongoURI,{useNewUrlParser:true,useUnifiedTopology: true});
 const db=mongoose.connection;
 db.on("error",(err)=>console.error(error));
 db.once('open',()=>console.log('Connected to Database ...'));
@@ -77,7 +77,7 @@ app.use(session({
   secret:'mysupersecret',
   resave:false,
   saveUninitialized:false,
-  store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL }),
+  store: MongoStore.create({ mongoUrl: keys.mongoURI }),
   // store: MongoStore.create({ mongoUrl: 'mongodb://localhost/shopping' }),
   cookie:{maxAge:180*60*1000}  // expired in 3 hour
 }));

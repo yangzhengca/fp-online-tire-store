@@ -13,9 +13,17 @@ var csrf=require('csurf');
 var csrfProtection=csrf();
 router.use(csrfProtection);
 
+//import auth role
+const {authRole}=require('../config/role');
 
-router.get('/profile',isLoggedIn,(req,res,next)=>{
-    res.render('user/profile');
+
+
+
+// router.get('/profile',isLoggedIn,(req,res,next)=>{
+//     res.render('user/profile');
+// });
+router.get('/profile',isLoggedIn,authRole('admin'),(req,res,next)=>{
+    res.render('user/dashboard');
 });
 
 router.get('/logout',isLoggedIn,(req,res,next)=>{

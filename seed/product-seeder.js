@@ -3,12 +3,12 @@ var mongoose=require('mongoose');
 
 
 
-const DATABASE_URL="mongodb://localhost:27017/shopping"
-// const DATABASE_URL="mongodb+srv://dbneo:@cluster0.m1pot.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+// const DATABASE_URL="mongodb://localhost:27017/shopping"
+const DATABASE_URL="mongodb+srv://dbneo:neo3120@cluster0.m1pot.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 mongoose.connect(DATABASE_URL,{useNewUrlParser:true,useUnifiedTopology: true});
 const db=mongoose.connection;
-db.on("error",(err)=>console.error(error));
+db.on("error",(error)=>console.error(error));
 db.once('open',()=>console.log('Connected to Database ...'));
 
 
