@@ -44,7 +44,7 @@
 			{{!-- <p class="mt-4">Make your search even easier by searching for a specific tire size. Got questions? We'll help you determine your tires' width, aspect ratio, and diameter.</p> --}}
 
 
-			<form class="mt-2" action="/" method="POST">
+			<form class="mt-2" action="/result" method="POST">
 				<div class="row">
 					{{!-- sizemytires widget --}}
 					<iframe src="https://www.sizemytires.com/tool?iframe=1" width="600" height="250" frameborder="0" scrolling="yes"></iframe>
@@ -52,8 +52,8 @@
 					<h5 class="">Enter tire size</h5>
 					<div class="col-md-4">
 						<label for="chooseWidth" class="searchDropdownLable">Width</label>
-						<select name="searchWidth" class="form-select form-select" aria-label=".form-select" id="chooseWidth" required>
-							<option selected>Choose Width</option>
+						<select name="searchWidth" class="form-select form-select" aria-label=".form-select" id="chooseWidth" required="true" aria-placeholder="Width">
+							<option value=''>Choose Width</option>
 							<option value=195>195</option>
 							<option value=205>205</option>
 							<option value=215>215</option>
@@ -65,7 +65,7 @@
 					<div class="col-md-4">
 						<label for="chooseAspectRatio">Aspect Ratio</label>
 						<select name="searchAspectRatio" class="form-select form-select" aria-label=".form-select" id="chooseAspectRatio" required>
-							<option selected>Choose Aspect Ratio</option>
+							<option value=''>Choose Aspect Ratio</option>
 							<option value=40>40</option>
 							<option value=45>45</option>
 							<option value=50>50</option>
@@ -78,7 +78,7 @@
 					<div class="col-md-4">
 						<label for="chooseDiameter">Diameter</label>
 						<select name="searchDiameter" class="form-select form-select" aria-label=".form-select" id="chooseDiameter" required>
-							<option selected>Choose Diameter</option>
+							<option value=''>Choose Diameter</option>
 							<option value=16>16</option>
 							<option value=17>17</option>
 							<option value=18>18</option>

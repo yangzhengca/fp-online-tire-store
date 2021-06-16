@@ -86,9 +86,70 @@ router.post('/charge',(req,res)=>{
 
 
 //search by size route
-router.post('/search',(rea,res)=>{
-
+router.post('/result',getProduct,(req,res)=>{
+  console.log(res.product)
+  res.render('shop/result',{product:res.product});
+  
 })
+
+//must choose all size option
+async function getProduct(req,res,next){
+  let product 
+  try{
+    product=await Product.find({
+      width:req.body.searchWidth,
+      aspectRatio:req.body.searchAspectRatio,
+      diameter:req.body.searchDiameter
+    });
+    
+  }catch(err){
+      return res.status(500).json({message:err.message});
+  }
+  res.product=product;
+  next()
+}
+
+// add to cart from result page
+router.get('/add-to-cart-from-result/:id',(req,res,next)=>{
+  var productId=req.params.id;
+  var cart=new Cart(req.session.cart?req.session.cart:{items:{}});
+  Product.findById(productId,(err,product)=>{
+    if(err){
+      return res.redirect('/result');
+    }
+    cart.add(product,product.id);
+    req.session.cart=cart;
+    // console.log(req.session.cart);
+    res.redirect('/result');
+  });
+});
+
+// router.get('/result',getProduct,(req,res)=>{
+//   res.render('shop/result',{product:product})
+// })
+
+
+
+//search when at least on has one size option was selected(未完成)
+// async function getProduct(req,res,next){
+//   let product 
+//   try{
+//       if(req.searchWidth!=='' && req.body.searchAspectRatio!==''&&req.body.searchDiameter!==''){
+//         product=await Product.find({
+//         width:req.body.searchWidth,
+//         aspectRatio:req.body.searchAspectRatio,
+//         diameter:req.body.searchDiameter
+//       })};
+
+//       if(product==null){
+//           return res.status(404).json({message:"Can not find product in your entered tire size"});
+//       }
+//   }catch(err){
+//       return res.status(500).json({message:err.message});
+//   }
+//   res.product=product;
+//   next()
+// }
 
 
 module.exports = router;
