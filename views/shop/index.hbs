@@ -37,19 +37,61 @@
 <!--- Two Column Section -->
 <div class="container-fluid padding mt-4">
 	<div class="row padding">
-		<div class="col-lg-6">
-			<h2>Shop by tire size</h2>
-			<h5>The perfect tires. The perfect fit.</h5>
-			<p>Make your search even easier by searching for a specific tire size. Got questions? We'll help you determine your tires' width, aspect ratio, and diameter.</p>
-			<p>Enter Tire Diameter Size</p>
-			<form class="example" action="#">
-				<input type="text" placeholder="Search.." name="search">
-				<button type="submit"><i class="fa fa-search"></i></button>
+		<div class="col-lg-7">
+			<h2 class="mt-4">Shop by tire size</h2>
+			<h5 class="mt-4">The perfect tires. The perfect fit.</h5>
+			<p class="mt-4">Make your search even easier by searching for a specific tire size. Got questions? We'll help you determine your tires' width, aspect ratio, and diameter.</p>
+			<h5 class="mt-4">Enter Tire Diameter Size</h5>
+			<form class="mt-2" action="/" method="POST">
+				<div class="row">
+					<div class="col-md-4">
+						<label for="chooseWidth" class="searchDropdownLable">Width</label>
+						<select name="searchWidth" class="form-select form-select-sm" aria-label=".form-select-sm" id="chooseWidth" required>
+							<option selected>Choose Width</option>
+							<option value=195>195</option>
+							<option value=205>205</option>
+							<option value=215>215</option>
+							<option value=225>225</option>
+							<option value=235>235</option>
+							<option value=245>245</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<label for="chooseAspectRatio">Aspect Ratio</label>
+						<select name="searchAspectRatio" class="form-select form-select-sm" aria-label=".form-select-sm" id="chooseAspectRatio" required>
+							<option selected>Choose Aspect Ratio</option>
+							<option value=40>40</option>
+							<option value=45>45</option>
+							<option value=50>50</option>
+							<option value=55>55</option>
+							<option value=60>60</option>
+							<option value=65>65</option>
+							<option value=70>70</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<label for="chooseDiameter">Diameter</label>
+						<select name="searchDiameter" class="form-select form-select-sm" aria-label=".form-select-sm" id="chooseDiameter" required>
+							<option selected>Choose Diameter</option>
+							<option value=16>16</option>
+							<option value=17>17</option>
+							<option value=18>18</option>
+							<option value=19>19</option>
+						</select>
+					</div>
+
+					
+				</div>
+
+				<div class="d-grid gap-2 col-5 ms-auto">
+					<button class="btn btn-primary btn-lg" type="submit"><i class="fa fa-search"></i></button>
+				</div>
+								
 			</form>
 			<br>
-			<a href="#" class="btn btn-primary">Learn More</a>
+			{{!-- <a href="#" class="btn btn-primary">Learn More</a> --}}
 		</div>
-		<div class="col-lg-6">
+		<div class="col-lg-5">
 			<img src="/images/tire-size.png" alt="tire-size.png" class="img-fluid">
 		</div>	
 	</div>
@@ -94,7 +136,7 @@
 	<div class="row padding">
 		<div class="col-lg-6">
 			<h2>Why choose us ?</h2>
-			<p>Wholesale Tires Canada is based in Regina, and focusing on sales of tires over ten years.</p>
+			<p class="mt-4">Wholesale Tires Canada is based in Regina, and focusing on sales of tires over ten years.</p>
 			<p>We provide high-quality tires and pre-sales and after-sales services.
 			</p>
 			<p>Currently, we are selling tires to individuals and companies all across Canada. We will be expanidng our operations into the United States soon.</p>

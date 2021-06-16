@@ -34,6 +34,17 @@ router.post('/',async(req,res)=>{
     }
 })
 
+//update one
+
+
+
+
+//delete one
+
+
+
+//search
+
 
 
 
