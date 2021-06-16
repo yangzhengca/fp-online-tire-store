@@ -38,6 +38,7 @@ const stripe = require('stripe')(keys.stripeSecretKey)
 
 var routes = require('./routes/index');
 var userRoutes = require('./routes/user');
+var adminRoutes=require('./routes/admin');
 
 var app = express();
 
@@ -99,6 +100,7 @@ app.use(function(req,res,next){
 
 app.use('/user', userRoutes);
 app.use('/', routes);
+app.use('/admin', adminRoutes);
 
 
 // catch 404 and forward to error handler

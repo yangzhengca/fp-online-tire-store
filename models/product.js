@@ -18,7 +18,19 @@ var schema=new Schema({
         type:Number,
         required:true
     },
-    size:{
+    width:{
+        type:Number,
+        required:true
+    },
+    aspectRatio:{
+        type:Number,
+        required:true
+    },
+    diameter:{
+        type:Number,
+        required:true
+    },
+    inStock:{
         type:Number,
         required:true
     }

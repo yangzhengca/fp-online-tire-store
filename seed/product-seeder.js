@@ -17,8 +17,11 @@ var products=[
         imagePath:"https://i.imgur.com/pQMplfB.jpg",
         title:'18" AT Tire',
         description:"18 inches all terrain tire",
+        width:230,
+        aspectRatio:65,
+        diameter:18,
         price:200,
-        size:18
+        inStock:18
     }),
 
     new Product({
