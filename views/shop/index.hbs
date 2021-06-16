@@ -40,10 +40,16 @@
 		<div class="col-lg-7">
 			<h2 class="mt-4">Shop by tire size</h2>
 			<h5 class="mt-4">The perfect tires. The perfect fit.</h5>
-			<p class="mt-4">Make your search even easier by searching for a specific tire size. Got questions? We'll help you determine your tires' width, aspect ratio, and diameter.</p>
-			<h5 class="mt-4">Enter Tire Diameter Size</h5>
+			<p>Please search the tire size of your vehicle first, or directly enter a tire size.</p>
+			{{!-- <p class="mt-4">Make your search even easier by searching for a specific tire size. Got questions? We'll help you determine your tires' width, aspect ratio, and diameter.</p> --}}
+
+
 			<form class="mt-2" action="/" method="POST">
 				<div class="row">
+					{{!-- sizemytires widget --}}
+					<iframe src="http://www.sizemytires.com/tool?iframe=1" width="600" height="250" frameborder="0" scrolling="yes"></iframe>
+
+					<h5 class="">Enter tire size</h5>
 					<div class="col-md-4">
 						<label for="chooseWidth" class="searchDropdownLable">Width</label>
 						<select name="searchWidth" class="form-select form-select-sm" aria-label=".form-select-sm" id="chooseWidth" required>
@@ -82,8 +88,8 @@
 				</div>
 
 
-				<div class="d-grid gap-2 col-5 ms-auto">
-					<button class="btn btn-primary btn-lg" type="submit"><i class="fa fa-search"></i></button>
+				<div class="d-grid gap-2 col-3 ms-auto">
+					<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
 				</div>
 								
 			</form>
@@ -139,6 +145,7 @@
 					<button class="btn btn-primary btn-lg" type="submit"><i class="fa fa-search"></i></button>
 				</div>								
 			</form> --}}
+			
 
 			{{!-- <a href="#" class="btn btn-primary">Learn More</a> --}}
 		</div>
@@ -187,7 +194,7 @@
 	<div class="row padding">
 		<div class="col-lg-6">
 			<h2>Why choose us ?</h2>
-			<p class="mt-4">Wholesale Tires Canada is based in Regina, and focusing on sales of tires over ten years.</p>
+			<p class="mt-4">Awesome Tires is based in Regina, and focusing on sales of tires over ten years.</p>
 			<p>We provide high-quality tires and pre-sales and after-sales services.
 			</p>
 			<p>Currently, we are selling tires to individuals and companies all across Canada. We will be expanidng our operations into the United States soon.</p>

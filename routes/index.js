@@ -1,8 +1,8 @@
-var express = require('express');
+const express = require('express');
 const cart = require('../models/cart');
-var router = express.Router();
-var Product=require('../models/product');
-var Cart=require('../models/cart');
+const router = express.Router();
+const Product=require('../models/product');
+const Cart=require('../models/cart');
 const keys=require('../config/keys');
 
 // const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -84,6 +84,11 @@ router.post('/charge',(req,res)=>{
   .then(charge=>res.render('shop/success'));
 })
 
+
+//search by size route
+router.post('/search',(rea,res)=>{
+
+})
 
 
 module.exports = router;
