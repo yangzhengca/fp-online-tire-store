@@ -33,7 +33,9 @@
                 <label for="inStockInput">In Stock</label>
                 <input type="number" name="inStock" id="inStockInput" required class="form-control" value="{{product.inStock}}">
 
-                <a href="/admin/all" class="btn btn-secondary btn-lg mt-4">Cancel</a>
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+                <a href="/admin/dashboard" class="btn btn-secondary btn-lg mt-4">Cancel</a>
                 <button type="submit" class="btn btn-primary btn-lg mt-4">Update</button>
             </form>
         </div>

@@ -18,14 +18,14 @@ const {authRole}=require('../config/role');
 
 // create new product page
 router.get('/create',isLoggedIn,authRole('admin'),(req,res)=>{
-    res.render('admin/create');
+    res.render('admin/create',{csrfToken:req.csrfToken(),title:'Create a new product'});
 })
 
 //get all products
 router.get('/dashboard',isLoggedIn,authRole('admin'),async(req,res)=>{
     try{
         const products=await Product.find();
-        res.render('admin/dashboard',{products:products})
+        res.render('admin/dashboard',{products:products,csrfToken:req.csrfToken(),title:'Admin Dashboard'})
     }catch(err){
         res.status(500).json({message:err.message});
     }
@@ -58,7 +58,8 @@ router.post('/create',isLoggedIn,authRole('admin'),async(req,res)=>{
     });
     try{
         const newProduct=await product.save();
-        res.status(201).json(newProduct)
+        res.redirect('/admin/dashboard');
+        // res.status(201).json(newProduct)
     }catch(err){
         res.status(400).json({message:err.message});
     }
@@ -68,7 +69,7 @@ router.post('/create',isLoggedIn,authRole('admin'),async(req,res)=>{
 router.get('/edit/:id',isLoggedIn,authRole('admin'),getProduct,async (req,res)=>{
     
     try{
-        res.render('admin/edit',{product:res.product})
+        res.render('admin/edit',{product:res.product,csrfToken:req.csrfToken(),title:"Edit product"})
     }catch(err){
         res.status(400).json({message:err.message})
     }
@@ -86,7 +87,7 @@ router.post('/edit/:id',isLoggedIn,authRole('admin'),getProduct,async(req,res)=>
     res.product.inStock=req.body.inStock;
     try{
         const updatedProduct=await res.product.save()
-        res.redirect('/admin/all');
+        res.redirect('/admin/dashboard');
     }catch(err){
         res.status(400).json({message:err.message})
     }
