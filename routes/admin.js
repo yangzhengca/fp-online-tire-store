@@ -5,16 +5,46 @@ var Product=require('../models/product');
 var Cart=require('../models/cart');
 const keys=require('../config/keys');
 
+//import passport
+var passport=require('passport');
 
-//admin page
+//import csrf
+var csrf=require('csurf');
+var csrfProtection=csrf();
+router.use(csrfProtection);
 
-router.get('/',(req,res)=>{
-    res.render('admin/admin');
+//import auth role
+const {authRole}=require('../config/role');
+
+// create new product page
+router.get('/create',isLoggedIn,authRole('admin'),(req,res)=>{
+    res.render('admin/create');
+})
+
+//get all products
+router.get('/dashboard',isLoggedIn,authRole('admin'),async(req,res)=>{
+    try{
+        const products=await Product.find();
+        res.render('admin/dashboard',{products:products})
+    }catch(err){
+        res.status(500).json({message:err.message});
+    }
+})
+
+// deleting one
+router.get('/delete/:id',isLoggedIn,authRole('admin'),getProduct,async (req,res)=>{
+    try{
+        await res.product.remove();
+        res.redirect('/admin/dashboard');
+    }catch(err){
+        res.status(500).json({message:err.message})
+    }
 })
 
 
+
 //create one
-router.post('/',async(req,res)=>{
+router.post('/create',isLoggedIn,authRole('admin'),async(req,res)=>{
     // console.log(req.body)
     const product=new Product({
         imagePath:req.body.imagePath,
@@ -34,19 +64,71 @@ router.post('/',async(req,res)=>{
     }
 })
 
+//edit page
+router.get('/edit/:id',isLoggedIn,authRole('admin'),getProduct,async (req,res)=>{
+    
+    try{
+        res.render('admin/edit',{product:res.product})
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+});
+
 //update one
+router.post('/edit/:id',isLoggedIn,authRole('admin'),getProduct,async(req,res)=>{
+    res.product.imagePath=req.body.imagePath;
+    res.product.title=req.body.title;
+    res.product.description=req.body.description;
+    res.product.price=req.body.price;
+    res.product.width=req.body.width;
+    res.product.aspectRatio=req.body.aspectRatio;
+    res.product.diameter=req.body.diameter;
+    res.product.inStock=req.body.inStock;
+    try{
+        const updatedProduct=await res.product.save()
+        res.redirect('/admin/all');
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+})
 
 
 
 
-//delete one
 
 
-
-
-
+// function- get item by id
+async function getProduct(req,res,next){
+    let product 
+    try{
+      product=await Product.findById(req.params.id);
+      if(product==null){
+        return res.status(404).json({message:"Can not find subscriber"});
+    }
+    }catch(err){
+        return res.status(500).json({message:err.message});
+    }
+    res.product=product;
+    next()
+  }
 
 
 
 
 module.exports = router;
+
+
+
+function isLoggedIn(req,res,next) {
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/products');
+}
+
+function notLoggedIn(req,res,next) {
+    if(!req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/products');
+}

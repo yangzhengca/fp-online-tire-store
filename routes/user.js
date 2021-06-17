@@ -23,7 +23,7 @@ const {authRole}=require('../config/role');
 //     res.render('user/profile');
 // });
 router.get('/profile',isLoggedIn,authRole('admin'),(req,res,next)=>{
-    res.render('admin/dashboard');
+    res.redirect('/admin/dashboard');
 });
 
 router.get('/logout',isLoggedIn,(req,res,next)=>{
