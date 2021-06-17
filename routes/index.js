@@ -4,7 +4,8 @@ const router = express.Router();
 const Product=require('../models/product');
 const Cart=require('../models/cart');
 const keys=require('../config/keys');
-
+const Order=require('../models/order');
+const { session } = require('passport');
 // const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 // const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 const stripe = require('stripe')(keys.stripeSecretKey)
@@ -64,7 +65,7 @@ router.get('/checkout',(req,res,next)=>{
     return res.redirect('shopping-cart');
   }
   var cart =new Cart(req.session.cart);
-  res.render('shop/checkout',{total:cart.totalPrice*100, key:stripePublicKey});
+  res.render('shop/checkout',{totalDisplay:cart.totalPrice,total:cart.totalPrice*100, key:keys.stripePublicKey});
 });
 
 //charge route
@@ -80,7 +81,28 @@ router.post('/charge',(req,res)=>{
     description:'Tires',
     currency:'usd',
     customer:customer.id
-  }))
+  }),
+    function(err,charge){    //create a order #17
+    if(err){
+      req.flash('error',err.message);
+      return res.redirect('/shopping-cart');
+    }
+    var order=new Order({
+      user:req.user,
+      cart:cart,
+      address:req.body.address,
+      name:req.body.name,
+      paymentId:charge.id
+    });
+    order.save((err,rusult)=>{
+
+    });} //order end here
+  
+
+  ) // syntax for charge
+ 
+ 
+
   .then(charge=>res.render('shop/success'));
 })
 
@@ -154,3 +176,11 @@ router.get('/result',(req,res)=>{
 
 
 module.exports = router;
+
+function isLoggedIn(req,res,next) {
+  if(req.isAuthenticated()){
+      return next();
+  }
+  req.session.oldUrl=req.url;
+  res.redirect('/user/signin');
+}
