@@ -1,38 +1,63 @@
 {{# if products }}
-    <div class="row m-auto">
-        <div class="col-sm-6 col-md-6">
-            <ul class="list-group">
+    {{!-- <div class="row m-auto">
+        <div class="col-sm-6 col-md-6 m-auto">
+            <ol class="list-group list-group-numbered ">
                 {{# each products}}
-                    <li class="list-group-item">
-                        
-                        <strong>{{this.item.title}}</strong>
-                        <span class="label label-success bg-success">${{this.price}}</span>
-                        <div class="btn-group">
-                            <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-bs-toggle="dropdown">Action <span class="caret"></span> </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Reduce by 1</a></li>
-                                <li><a class="dropdown-item" href="#">Remove All</a></li>
-                            </ul>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{this.item.title}}</div>
+                            {{this.item.width}}/{{this.item.aspectRatio}}R{{this.item.diameter}}
                         </div>
-                        <span class="badge badge-pill badge-dark bg-success">{{this.qty}}</span>
+                        <div class="col-3">
+                            <span class="badge bg-primary rounded-pill">{{this.qty}}</span>
+                        </div>
+                        <div class="col-3">
+                            <strong class="label label-success bg-success">${{this.price}}</strong>
+                        </div>
                     </li>
                 {{/each}}
-
-            </ul>
+            </ol>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Item name</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Unit price</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{# each products}}
+                <tr>
+                    <td>{{this.item.title}}</td>
+                    <td>{{this.item.width}}/{{this.item.aspectRatio}}R{{this.item.diameter}}</td>
+                    <td>{{this.item.price}}</td>
+                    <td>{{this.qty}}</td>
+                    <td>{{this.price}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+    <div class="row m-auto">
+        <div class="col-sm-3 col-md-3 ms-auto">
             <strong>Total: {{totalPrice}}</strong>
         </div>
     </div>
     <hr>
-    <div class="row">
-        {{!-- <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-            <a href="/checkout" type="button" class="btn btn-success">Checkout</a>
-        </div> --}}
-        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+    <div class="row m-auto">
+        <div class="col-sm-3 col-md-3 ms-auto">
             <form action="/charge" method="POST"> 
                 <script 
                 src="//checkout.stripe.com/v2/checkout.js"
@@ -56,7 +81,7 @@
     </div>
 {{else}}
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+        <div class="col-sm-6 col-md-6">
         <h2>No Item in Cart</h2>
         </div>
     </div>
