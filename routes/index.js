@@ -6,10 +6,10 @@ const Cart=require('../models/cart');
 const keys=require('../config/keys');
 const Order=require('../models/order');
 const { session } = require('passport');
+
 // const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 // const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 const stripe = require('stripe')(keys.stripeSecretKey)
-
 
 
 //home page
@@ -159,8 +159,9 @@ router.post('/charge',(req,res)=>{
 router.post('/result',getProduct,(req,res)=>{
   // console.log(res.product)
   req.session.searchResult=res.product;
-  console.log(req.session.searchResult)
-  res.render('shop/result',{product:req.session.searchResult});
+  // console.log(req.session.searchResult)
+  // res.render('shop/result',{product:req.session.searchResult});
+  res.render('shop/result',{product:res.product});
   
 })
 
@@ -187,19 +188,16 @@ router.get('/add-to-cart-from-result/:id',(req,res,next)=>{
   var cart=new Cart(req.session.cart?req.session.cart:{items:{}});
   Product.findById(productId,(err,product)=>{
     if(err){
-      // return res.render('shop/result',{product:req.product});
       res.redirect('/result')
     }
     cart.add(product,product.id);
     req.session.cart=cart;
-    // console.log(req.session.cart);
-    // res.render('shop/result',{product:product});
     res.redirect('/result')
   });
 });
 
 router.get('/result',(req,res)=>{
-  console.log(req.session.searchResult)
+  // console.log(req.session.searchResult)
   res.product=req.session.searchResult;
   res.render('shop/result',{product:res.product})
 })

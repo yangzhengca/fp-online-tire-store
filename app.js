@@ -1,3 +1,4 @@
+// //use dotenv
 // if (process.env.NODE_ENV !== 'production') {
 //   require('dotenv').config()
 // }
@@ -79,7 +80,6 @@ app.use(session({
   resave:false,
   saveUninitialized:false,
   store: MongoStore.create({ mongoUrl: keys.mongoURI }),
-  // store: MongoStore.create({ mongoUrl: 'mongodb://localhost/shopping' }),
   cookie:{maxAge:180*60*1000}  // expired in 3 hour
 }));
 //use flash
