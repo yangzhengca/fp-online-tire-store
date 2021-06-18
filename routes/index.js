@@ -106,10 +106,11 @@ router.get('/checkout',(req,res,next)=>{
 });
 
 
-// //success checkout page
+// //success checkout page (& empty shopping cart)
 router.get('/charge/success',(req,res)=>{
-  var cart=new Cart(req.session.cart?req.session.cart:{items:{}});
-  cart.emptyCart();
+  // console.log(req.session.cart)
+  req.session.cart={}
+  // console.log(req.session.cart)
   res.render('shop/success')
 })
 
@@ -165,7 +166,7 @@ router.post('/result',getProduct,(req,res)=>{
   
 })
 
-//must choose all size option
+//search function-(must choose all size option)
 async function getProduct(req,res,next){
   let product 
   try{
@@ -196,6 +197,8 @@ router.get('/add-to-cart-from-result/:id',(req,res,next)=>{
   });
 });
 
+
+//result page route
 router.get('/result',(req,res)=>{
   // console.log(req.session.searchResult)
   res.product=req.session.searchResult;
