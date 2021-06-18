@@ -23,10 +23,14 @@ const { ResultWithContext } = require('express-validator/src/chain');
 // router.get('/profile',isLoggedIn,(req,res,next)=>{
 //     res.render('user/profile');
 // });
+
+
+//profile page route
 router.get('/profile',isLoggedIn,authRole('admin'),(req,res,next)=>{
     res.redirect('/admin/dashboard');
 });
 
+//log out route
 router.get('/logout',isLoggedIn,(req,res,next)=>{
     req.logout();
     res.redirect('/');
@@ -37,33 +41,35 @@ router.use('/products',notLoggedIn,(req,res,next)=>{
     next();
 });
 
-
+//sign up page route
 router.get('/signup',(req,res,next)=>{
     var messages=req.flash('error');
     res.render('user/signup',{csrfToken:req.csrfToken(),messages:messages,hasErrors:messages.length>0,title:'Sign In'});
   })
-  
+ 
+//sign up route  
 router.post('/signup',passport.authenticate('local.signup',{
     // successRedirect:'/user/profile',
     failureRedirect:'/user/signup',
     failureFlash:true
 }),function(req,res,next) {
     if(req.session.oldUrl){
-        res.redirect(req.session.oldUrl);
-        console.log(req.session.oldUrl)
+        var oldUrl=req.session.oldUrl;
         res.session.oldUrl=null;
+        res.redirect(oldUrl);
     }else{
         res.redirect('/user/profile')
     }
 });
   
 
-  
+//sign in page route
 router.get('/signin',(req,res,next)=>{
     var messages=req.flash('error');
     res.render('user/signin',{csrfToken:req.csrfToken(),messages:messages,hasErrors:messages.length>0,title:'Sign In'});
 });
   
+//sign in route
 router.post('/signin',passport.authenticate('local.signin',{
     // successRedirect:'/user/profile',
     failureRedirect:'/user/signin',
@@ -71,9 +77,11 @@ router.post('/signin',passport.authenticate('local.signin',{
 
 }),function(req,res,next) {
     if(req.session.oldUrl){
-        res.redirect(req.session.oldUrl);
-        console.log(req.session.oldUrl)
+        var oldUrl=req.session.oldUrl;
         res.session.oldUrl=null;
+        res.redirect(oldUrl);
+        // console.log(req.session.oldUrl)
+        
     }else{
         res.redirect('/user/profile')
     }
@@ -84,7 +92,7 @@ router.post('/signin',passport.authenticate('local.signin',{
 
 module.exports = router;
 
-
+// is logged in functuon
 function isLoggedIn(req,res,next) {
     if(req.isAuthenticated()){
         return next();

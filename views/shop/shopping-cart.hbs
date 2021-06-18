@@ -27,8 +27,9 @@
                     <th scope="col">Item name</th>
                     <th scope="col">Size</th>
                     <th scope="col">Unit price</th>
-                    <th scope="col">Qty</th>
+                    <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,8 +38,9 @@
                     <td>{{this.item.title}}</td>
                     <td>{{this.item.width}}/{{this.item.aspectRatio}}R{{this.item.diameter}}</td>
                     <td>{{this.item.price}}</td>
-                    <td>{{this.qty}}</td>
-                    <td>{{this.price}}</td>
+                    <td><a href="/reduce/{{this.item._id}}"><i class="fas fa-minus-square"></i></a><span class="mx-3">{{this.qty}}</span><a href="/add/{{this.item._id}}"><i class="fas fa-plus-square"></i></td>
+                    <td>${{this.price}}</td>
+                    <td><a href="/remove/{{this.item._id}}"><i class="far fa-trash-alt"></i></a></td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -52,7 +54,7 @@
 
     <div class="row m-auto">
         <div class="col-sm-3 col-md-3 ms-auto">
-            <strong>Total: {{totalPrice}}</strong>
+            <strong>Total: ${{totalPrice}}</strong>
         </div>
     </div>
     <hr>
