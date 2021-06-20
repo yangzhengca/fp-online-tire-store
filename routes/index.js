@@ -117,8 +117,10 @@ router.get('/charge/success',(req,res)=>{
 
 //charge route
 router.post('/charge',(req,res)=>{
-  const amount=40000;
-
+  // const amount=40000;
+  const amount=req.body.total
+  // console.log(res.session.cart.totalPrice*100)
+  console.log(req.body.total)
   stripe.customers.create({
     email:req.body.stripeEmail,
     source:req.body.stripeToken
@@ -158,10 +160,7 @@ router.post('/charge',(req,res)=>{
 
 //search by size route
 router.post('/result',getProduct,(req,res)=>{
-  // console.log(res.product)
   req.session.searchResult=res.product;
-  // console.log(req.session.searchResult)
-  // res.render('shop/result',{product:req.session.searchResult});
   res.render('shop/result',{product:res.product});
   
 })
@@ -200,7 +199,6 @@ router.get('/add-to-cart-from-result/:id',(req,res,next)=>{
 
 //result page route
 router.get('/result',(req,res)=>{
-  // console.log(req.session.searchResult)
   res.product=req.session.searchResult;
   res.render('shop/result',{product:res.product})
 })
