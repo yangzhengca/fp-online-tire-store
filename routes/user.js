@@ -44,7 +44,7 @@ router.use('/products',notLoggedIn,(req,res,next)=>{
 //sign up page route
 router.get('/signup',(req,res,next)=>{
     var messages=req.flash('error');
-    res.render('user/signup',{csrfToken:req.csrfToken(),messages:messages,hasErrors:messages.length>0,title:'Sign In'});
+    res.render('user/signup',{csrfToken:req.csrfToken(),messages:messages,hasErrors:messages.length>0,title:'Sign Up'});
   })
  
 //sign up route  

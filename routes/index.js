@@ -128,33 +128,10 @@ router.post('/charge',(req,res)=>{
   .then(customer=>stripe.charges.create({
     amount,
     description:'Tires',
-    currency:'usd',
+    currency:'cad',
     customer:customer.id
-  }),
-    function(err,charge){    //create a order #17
-    if(err){
-      req.flash('error',err.message);
-      return res.redirect('/shopping-cart');
-    }
-    var order=new Order({
-      user:req.user,
-      cart:cart,
-      address:req.body.address,
-      name:req.body.name,
-      paymentId:charge.id
-    });
-    order.save((err,rusult)=>{
-
-    });} //order end here
-    
-    
-    
-  ) // syntax for charge
- 
- 
-
-  .then(charge=>res.redirect('charge/success'))
-  
+  }))
+  .then(charge=>res.redirect('charge/success'))  
 })
 
 

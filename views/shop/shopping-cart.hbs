@@ -1,25 +1,5 @@
 {{# if products }}
-    {{!-- <div class="row m-auto">
-        <div class="col-sm-6 col-md-6 m-auto">
-            <ol class="list-group list-group-numbered ">
-                {{# each products}}
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold">{{this.item.title}}</div>
-                            {{this.item.width}}/{{this.item.aspectRatio}}R{{this.item.diameter}}
-                        </div>
-                        <div class="col-3">
-                            <span class="badge bg-primary rounded-pill">{{this.qty}}</span>
-                        </div>
-                        <div class="col-3">
-                            <strong class="label label-success bg-success">${{this.price}}</strong>
-                        </div>
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
-    </div> --}}
-
+   
     <div class="row">
         <table class="table table-striped">
             <thead>
@@ -66,8 +46,8 @@
                 class="stripe-button"
                 data-key="{{key}}" 
                 data-amount="{{total}}" 
-                data-currency="usd" 
-                data-name="Stripe Payment" 
+                data-currency="cad" 
+                data-name="Awesome Tires" 
                 data-description="Buy tires from Awesome Tires" 
                 data-locale="auto" > 
                 </script> 
