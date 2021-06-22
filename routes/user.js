@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-
+var User=require('../models/user');
 // var Product=require('../models/product');
 
 
@@ -29,6 +29,8 @@ const { ResultWithContext } = require('express-validator/src/chain');
 router.get('/profile',isLoggedIn,authRole('admin'),(req,res,next)=>{
     res.redirect('/admin/dashboard');
 });
+
+
 
 //log out route
 router.get('/logout',isLoggedIn,(req,res,next)=>{
@@ -83,10 +85,37 @@ router.post('/signin',passport.authenticate('local.signin',{
         // console.log(req.session.oldUrl)
         
     }else{
+        console.log(req.body)
         res.redirect('/user/profile')
     }
 });
 
+//modify profile
+router.get('/:id',isLoggedIn,getUser,async (req,res,next)=>{
+    try{
+        res.render('user/edit-profile',{selectedUser:res.selectedUser,csrfToken:req.csrfToken(),title:"Edit profile"})
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+})
+
+// update user profile
+router.post('/edit/:id',isLoggedIn,getUser,async(req,res)=>{
+    res.selectedUser.email=req.body.email;
+    res.selectedUser.firstName=req.body.firstName;
+    res.selectedUser.lastName=req.body.lastName;
+    res.selectedUser.address=req.body.address;
+    res.selectedUser.city=req.body.city;
+    res.selectedUser.province=req.body.province;
+    res.selectedUser.postalCode=req.body.postalCode;
+    res.selectedUser.avatarPath=req.body.avatarPath;
+    try{
+        const updatedUser=await res.selectedUser.save()
+        res.redirect('/user/profile');
+    }catch(err){
+        res.status(400).json({message:err.message})
+    }
+})
 
 
 
@@ -107,3 +136,18 @@ function notLoggedIn(req,res,next) {
     }
     res.redirect('/products');
 }
+
+// function- get user by id
+async function getUser(req,res,next){
+    let selectedUser 
+    try{
+        selectedUser =await User.findById(req.params.id);
+      if(selectedUser ==null){
+        return res.status(404).json({message:"Can not find user"});
+    }
+    }catch(err){
+        return res.status(500).json({message:err.message});
+    }
+    res.selectedUser=selectedUser ;
+    next()
+  }

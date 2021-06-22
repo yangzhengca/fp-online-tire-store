@@ -104,7 +104,7 @@ async function getProduct(req,res,next){
     try{
       product=await Product.findById(req.params.id);
       if(product==null){
-        return res.status(404).json({message:"Can not find subscriber"});
+        return res.status(404).json({message:"Can not find product"});
     }
     }catch(err){
         return res.status(500).json({message:err.message});

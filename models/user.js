@@ -18,7 +18,30 @@ var userSchema=new Schema({
     date:{
         type:Date,
         default:Date.now
+    },
+    // add user profile
+    firstName:{
+        type:String
+    },
+    lastName:{
+        type:String
+    },
+    address:{
+        type:String
+    },
+    city:{
+        type:String
+    },
+    province:{
+        type:String
+    },
+    postalCode:{
+        type:String
+    },
+    avatarPath:{
+        type:String
     }
+
 });
 
 userSchema.methods.encryptPassword=function(password){
