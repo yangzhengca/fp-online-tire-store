@@ -12,13 +12,19 @@
     <h1 class="display-3">
         Welcome {{firstName}}! 
     </h1>
-    <p class="lead">Please confirm the shipping address in your profile before ordering.</p>
+    
     {{#if address}}
+    <p class="lead">Please confirm the shipping address in your profile before ordering.</p>
     <div class="col-lg-3">
         <h4>Shipping Address:</h4>
 		<div> {{firstName}} {{lastName}}</div>
         <div> {{address}}</div>
         <div> {{city}}, {{province}} {{postalCode}}</div>
+	</div>
+    {{else}}
+    <div class="col-lg-6">
+        <h4>No shipping address in your profile.</h4>
+        <p class="lead">Please add shipping address to your profile before ordering.</p>
 	</div>
     {{/if}}
     <a href="/" class="btn btn-success btn-lg">Go Back Home</a>
