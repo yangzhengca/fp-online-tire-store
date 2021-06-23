@@ -97,42 +97,88 @@ router.get('/shopping-cart',(req,res,next)=>{
 });
 
 //checkout page router
-router.get('/checkout',(req,res,next)=>{
-  if(!req.session.cart){
-    return res.redirect('shopping-cart');
-  }
-  var cart =new Cart(req.session.cart);
-  res.render('shop/checkout',{totalDisplay:cart.totalPrice,total:cart.totalPrice*100, key:keys.stripePublicKey});
-});
+// router.get('/checkout',(req,res,next)=>{
+//   if(!req.session.cart){
+//     return res.redirect('shopping-cart');
+//   }
+//   var cart =new Cart(req.session.cart);
+//   res.render('shop/checkout',{totalDisplay:cart.totalPrice,total:cart.totalPrice*100, key:keys.stripePublicKey});
+// });
 
 
 // //success checkout page (& empty shopping cart)
 router.get('/charge/success',(req,res)=>{
   // console.log(req.session.cart)
-  req.session.cart={}
+  // req.session.cart={}
   // console.log(req.session.cart)
   res.render('shop/success')
 })
 
 
-//charge route
-router.post('/charge',(req,res)=>{
-  // const amount=40000;
-  const amount=req.body.total
-  // console.log(res.session.cart.totalPrice*100)
-  console.log(req.body.total)
-  stripe.customers.create({
-    email:req.body.stripeEmail,
-    source:req.body.stripeToken
-  })
-  .then(customer=>stripe.charges.create({
-    amount,
-    description:'Tires',
-    currency:'cad',
-    customer:customer.id
-  }))
-  .then(charge=>res.redirect('charge/success'))  
-})
+// const YOUR_DOMAIN = 'http://localhost:3000';
+router.post('/create-checkout-session', async (req, res) => {
+  const total=req.session.cart.totalPrice*100
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    shipping_address_collection: {
+      allowed_countries: ['CA'],
+    },
+    line_items: [
+      {
+        price_data: {
+          currency: 'cad',
+          product_data: {
+            name: 'Tires',
+            images: ['https://i.imgur.com/Y6Zyuxr.png'],
+          }
+          ,
+          unit_amount: total
+        },
+        // amount_subtotal:1000
+
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `${keys.myDomain}/charge/success`,
+    cancel_url: `${keys.myDomain}/shopping-cart`,
+  });
+  //save cart to order
+  const paymentID=session.payment_intent
+  // console.log('Payment id:'+paymentId)
+  const cart=new Cart(req.session.cart)
+  var order=new Order({
+    user:req.user,
+    cart:cart,
+    // address:`${req.user.address},${req.user.city},${req.user.province} ${req.user.postalCode}`,
+    paymentId:paymentID
+  });
+  order.save()
+  req.session.cart={}
+  res.json({ id: session.id });
+  
+});
+
+
+// //charge route
+// router.post('/charge',(req,res)=>{
+//   // const amount=40000;
+//   const amount=req.body.total
+//   // console.log(res.session.cart.totalPrice*100)
+//   console.log(req.body.total)
+//   stripe.customers.create({
+//     email:req.body.stripeEmail,
+//     source:req.body.stripeToken
+//   })
+//   .then(customer=>stripe.charges.create({
+//     amount,
+//     description:'Tires',
+//     currency:'cad',
+//     customer:customer.id
+//   })
+//   )
+//   .then(charge=>res.redirect('charge/success'))  
+// })
 
 
 //search by size route

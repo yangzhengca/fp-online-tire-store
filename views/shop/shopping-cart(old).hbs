@@ -40,47 +40,27 @@
     <hr>
     <div class="row m-auto">
         <div class="col-sm-3 col-md-3 ms-auto">
-           <button type="button" class="btn btn-success btn-lg" id="checkout-button">Checkout</button>
+            <form action="/charge" method="POST"> 
+                <script 
+                src="//checkout.stripe.com/v2/checkout.js"
+                class="stripe-button"
+                data-key="{{key}}" 
+                data-amount="{{total}}" 
+                data-currency="cad" 
+                data-name="Awesome Tires" 
+                data-description="Buy tires from Awesome Tires" 
+                data-locale="auto" > 
+                </script> 
+
+                <input type="hidden" value="{{total}}" name='total'>
+                {{!-- hide default stripe btn --}}
+                <script>
+                    document.getElementsByClassName('stripe-button-el')[0].style.display='none';
+                </script>
+                <button type="submit" class="btn btn-success btn-lg">Checkout</button>
+            </form> 
         </div>
     </div>
-
-
-    <script type="text/javascript">
-    // Create an instance of the Stripe object with your publishable API key
-    
-    var stripe = Stripe('pk_test_51J1nqnKmu8GjevWW184jdbbzj8Pr7DsBL8Q2LzWhLFXg5QuXAKrP1fIxmCuZCvHwspnlfIWyQoFT7qbmWYTtRwa000YvsF9qNF');
-    var checkoutButton = document.getElementById("checkout-button");
-
-    checkoutButton.addEventListener("click", function () {
-      fetch("/create-checkout-session", {
-        method: "POST",
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (session) {
-          return stripe.redirectToCheckout({ sessionId: session.id });
-        })
-        .then(function (result) {
-          // If redirectToCheckout fails due to a browser or network
-          // error, you should display the localized error message to your
-          // customer using error.message.
-          if (result.error) {
-            alert(result.error.message);
-          }
-        })
-        .catch(function (error) {
-          console.error("Error:", error);
-        });
-    });
-  </script>
-
-
-
-
-
-
-
 {{else}}
     
     <br><br><br>

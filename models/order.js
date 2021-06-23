@@ -12,18 +12,17 @@ var schema=new Schema({
         required:true
     },
     address:{
-        type:String,
-        required:true
+        type:String
     },
     name:{
-        type:String,
-        required:true
+        type:String
     },
     paymentId:{
         type:String,
         required:true
     }
 });
+
 
 
 
