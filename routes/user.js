@@ -3,7 +3,8 @@ var express = require('express');
 var router = express.Router();
 var User=require('../models/user');
 // var Product=require('../models/product');
-
+const Order = require("../models/order");
+const Cart=require("../models/cart");
 
 //import passport
 var passport=require('passport');
@@ -20,12 +21,22 @@ const { ResultWithContext } = require('express-validator/src/chain');
 
 
 
-// router.get('/profile',isLoggedIn,(req,res,next)=>{
-//     res.render('user/profile');
+// router.get('/profile',isLoggedIn,async (req,res,next)=>{
+//     await Order.find({user:req.user}),function(err,orders){
+//     if(err){
+//         return res.write('Error!');
+//     }
+//     var cart;
+//     orders.forEach(function(order){
+//         cart =new Cart(order.cart);
+//         order.items=cart.generateArray();
+//     });
+//     res.render('user/profile',{ orders:orders,email:req.user.email,id:req.user._id,firstName:req.user.firstName,avatarPath:req.user.avatarPath,lastName:req.user.lastName,address:req.user.address,city:req.user.city,province:req.user.province,postalCode:req.user.postalCode });
+// };
 // });
 
 
-//profile page route
+// profile page route
 router.get('/profile',isLoggedIn,authRole('admin'),(req,res,next)=>{
     res.redirect('/admin/dashboard');
 });

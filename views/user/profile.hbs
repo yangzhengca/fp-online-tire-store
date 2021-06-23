@@ -12,7 +12,24 @@
     <h1 class="display-3">
         Welcome {{firstName}}! 
     </h1>
-    
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+            <h2>My Orders</h2>
+            {{# each orders}}
+            <div class="card" style="width: 18rem;">
+                <ul class="list-group list-group-flush">
+                    {{# each this.items}}
+                    <li class="list-group-item"><span class="badge rounded-pill bg-secondary">{{this.price}}</span>{{this.item.title}}|{{this.qty}} Units</li>
+                    {{/each}}
+                </ul>
+                <div class="card-footer">
+                    <strong>Total Price: ${{this.cart.totalPrice}}</strong>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
     {{#if address}}
     <p class="lead">Please confirm the shipping address in your profile before ordering.</p>
     <div class="col-lg-3">
