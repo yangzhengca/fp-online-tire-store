@@ -57,7 +57,7 @@ router.post('/signup',passport.authenticate('local.signup',{
 }),function(req,res,next) {
     if(req.session.oldUrl){
         var oldUrl=req.session.oldUrl;
-        res.session.oldUrl=null;
+        req.session.oldUrl=null;
         res.redirect(oldUrl);
     }else{
         res.redirect('/user/profile')
@@ -79,13 +79,13 @@ router.post('/signin',passport.authenticate('local.signin',{
 
 }),function(req,res,next) {
     if(req.session.oldUrl){
-        var oldUrl=req.session.oldUrl;
-        res.session.oldUrl=null;
+        const oldUrl=req.session.oldUrl;
+        req.session.oldUrl=null;
         res.redirect(oldUrl);
         // console.log(req.session.oldUrl)
         
     }else{
-        console.log(req.body)
+        // console.log(req.body)
         res.redirect('/user/profile')
     }
 });

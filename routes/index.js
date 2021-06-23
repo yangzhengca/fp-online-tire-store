@@ -7,6 +7,7 @@ const keys=require('../config/keys');
 const Order=require('../models/order');
 const { session } = require('passport');
 
+
 // const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 // const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 const stripe = require('stripe')(keys.stripeSecretKey)
@@ -88,7 +89,7 @@ router.get('/remove/:id',(req,res,next)=>{
 
 
 //shopping cart page router
-router.get('/shopping-cart',(req,res,next)=>{
+router.get('/shopping-cart',isLoggedIn,(req,res,next)=>{
   if(!req.session.cart){
     return res.render('shop/shopping-cart',{products:null});
   }
@@ -116,7 +117,7 @@ router.get('/charge/success',(req,res)=>{
 
 
 // const YOUR_DOMAIN = 'http://localhost:3000';
-router.post('/create-checkout-session', async (req, res) => {
+router.post('/create-checkout-session',async (req, res) => {
   const total=req.session.cart.totalPrice*100
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -257,5 +258,6 @@ function isLoggedIn(req,res,next) {
       return next();
   }
   req.session.oldUrl=req.url;
+  console.log(req.session.oldUrl)
   res.redirect('/user/signin');
 }
