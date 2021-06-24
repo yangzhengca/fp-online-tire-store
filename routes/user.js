@@ -6,6 +6,7 @@ var User=require('../models/user');
 const Order = require("../models/order");
 const Cart=require("../models/cart");
 
+
 //import passport
 var passport=require('passport');
 
@@ -21,25 +22,31 @@ const { ResultWithContext } = require('express-validator/src/chain');
 
 
 
-// router.get('/profile',isLoggedIn,async (req,res,next)=>{
-//     await Order.find({user:req.user}),function(err,orders){
-//     if(err){
-//         return res.write('Error!');
-//     }
-//     var cart;
-//     orders.forEach(function(order){
-//         cart =new Cart(order.cart);
-//         order.items=cart.generateArray();
-//     });
-//     res.render('user/profile',{ orders:orders,email:req.user.email,id:req.user._id,firstName:req.user.firstName,avatarPath:req.user.avatarPath,lastName:req.user.lastName,address:req.user.address,city:req.user.city,province:req.user.province,postalCode:req.user.postalCode });
-// };
+
+
+// //admin dashboard
+// router.get('/dashboard',isLoggedIn,authRole('admin'),(req,res,next)=>{
+//     res.render('admin/dashboard');
 // });
 
 
+
 // profile page route
-router.get('/profile',isLoggedIn,authRole('admin'),(req,res,next)=>{
-    res.redirect('/admin/dashboard');
-});
+router.get('/profile',isLoggedIn,(req,res,next)=>{
+    Order.find({user:req.user},function(err,orders){
+        console.log(orders)
+        if(err){
+            return res.write('Error!');
+        }
+        var cart;
+        orders.forEach(function(order){
+            cart =new Cart(order.cart);
+            order.items=cart.generateArray();
+        });
+        res.render('user/profile',{orders:orders,email:req.user.email,id:req.user._id,firstName:req.user.firstName,avatarPath:req.user.avatarPath,lastName:req.user.lastName,address:req.user.address,city:req.user.city,province:req.user.province,postalCode:req.user.postalCode});
+    })
+
+});//end
 
 
 

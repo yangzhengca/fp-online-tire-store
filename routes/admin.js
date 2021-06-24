@@ -16,12 +16,18 @@ router.use(csrfProtection);
 //import auth role
 const {authRole}=require('../config/role');
 
+// no right page
+router.get('/noright',(req,res)=>{
+    res.render('admin/noright',{csrfToken:req.csrfToken(),title:'Access Denied'});
+})
+
+
 // create new product page
 router.get('/create',isLoggedIn,authRole('admin'),(req,res)=>{
     res.render('admin/create',{csrfToken:req.csrfToken(),title:'Create a new product'});
 })
 
-//get all products
+//Admin dashboard -get all products
 router.get('/dashboard',isLoggedIn,authRole('admin'),async(req,res)=>{
     try{
         const products=await Product.find();

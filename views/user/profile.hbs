@@ -1,26 +1,39 @@
-<h1>User Profile</h1>
+{{!-- <h1>User Profile</h1> --}}
 <section class="py-5">
-    {{#if avatarPath}}
-    <div class="col-lg-3">
-		<img src="{{avatarPath}}" alt="avatar" class="img-fluid border border-secondary">
-	</div>
-    {{else}}
-    <div class="col-lg-3">
-        <img src="https://i.imgur.com/cSjQzIr.png" alt="default-avatar" class="img-fluid border border-secondary">
-    </div>
-    {{/if}}
-    <h1 class="display-3">
-        Welcome {{firstName}}! 
-    </h1>
-    <hr>
     <div class="row">
+        <div class="col-md-3">
+            {{#if avatarPath}}
+            <div class="col-lg-12">
+                <img src="{{avatarPath}}" alt="avatar" class="img-fluid border border-secondary">
+            </div>
+            {{else}}
+            <div class="col-lg-12">
+                <img src="https://i.imgur.com/cSjQzIr.png" alt="default-avatar" class="img-fluid border border-secondary">
+            </div>
+            {{/if}}
+        </div>
+        <div class="col-md-9">
+            <h2 class="display-3">
+            Welcome {{firstName}}! 
+            </h2>
+            <div class="mt-5">
+                <a href="/" class="btn btn-success btn-lg mx-4">Go Back Home</a>
+                <a href="/user/{{id}}" class="btn btn-success btn-lg">Edit Profile</a>
+            </div>                
+        </div>        
+    </div>
+    <hr>
+
+
+    <div class="row d-flex justify-content-center">
         <div class="col-md-8">
+            {{#if orders}}
             <h2>My Orders</h2>
             {{# each orders}}
-            <div class="card" style="width: 18rem;">
+            <div class="card mt-2">
                 <ul class="list-group list-group-flush">
                     {{# each this.items}}
-                    <li class="list-group-item"><span class="badge rounded-pill bg-secondary">{{this.price}}</span>{{this.item.title}}|{{this.qty}} Units</li>
+                    <li class="list-group-item d-flex justify-content-center"><span class="me-auto">{{this.item.title}} | {{this.item.width}}/{{this.item.aspectRatio}}R{{this.item.diameter}} | {{this.qty}} Units</span><span class="badge rounded-pill bg-secondary ms-auto">${{this.price}}</span></li>
                     {{/each}}
                 </ul>
                 <div class="card-footer">
@@ -28,24 +41,16 @@
                 </div>
             </div>
             {{/each}}
+            {{else}}
+            <h2>No orders!</h2>
+            {{/if}}
         </div>
     </div>
-    {{#if address}}
-    <p class="lead">Please confirm the shipping address in your profile before ordering.</p>
-    <div class="col-lg-3">
-        <h4>Shipping Address:</h4>
-		<div> {{firstName}} {{lastName}}</div>
-        <div> {{address}}</div>
-        <div> {{city}}, {{province}} {{postalCode}}</div>
-	</div>
-    {{else}}
-    <div class="col-lg-6">
-        <h4>No shipping address in your profile.</h4>
-        <p class="lead">Please add shipping address to your profile before ordering.</p>
-	</div>
-    {{/if}}
-    <a href="/" class="btn btn-success btn-lg">Go Back Home</a>
-    <a href="/user/{{id}}" class="btn btn-success btn-lg">Edit Profile</a>
+
+
+    
+    
+    
 </section>
 
 <br>

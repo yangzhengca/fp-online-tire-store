@@ -116,6 +116,7 @@ router.get('/charge/success',(req,res)=>{
 })
 
 
+//stripe checkout api
 // const YOUR_DOMAIN = 'http://localhost:3000';
 router.post('/create-checkout-session',async (req, res) => {
   const total=req.session.cart.totalPrice*100
@@ -144,9 +145,10 @@ router.post('/create-checkout-session',async (req, res) => {
     success_url: `${keys.myDomain}/charge/success`,
     cancel_url: `${keys.myDomain}/shopping-cart`,
   });
+
   //save cart to order
   const paymentID=session.payment_intent
-  // console.log('Payment id:'+paymentId)
+  // console.log('Payment id:'+paymentID)
   const cart=new Cart(req.session.cart)
   var order=new Order({
     user:req.user,
@@ -156,8 +158,8 @@ router.post('/create-checkout-session',async (req, res) => {
   });
   order.save()
   req.session.cart={}
-  res.json({ id: session.id });
-  
+
+  res.json({ id: session.id });  
 });
 
 
