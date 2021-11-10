@@ -3,3 +3,6 @@ ComIT graduation project, full-Stack e-commerce website, deployed on AWS EC2 ins
 
 # Tech stack
 Node.js, Express.js, MongoDB, Stripe, Hbs, Passport, AWS EC2, Nginx.
+
+#Demo
+https://yits.ca/
